@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect } from "react";
+import { PropsWithChildren } from "react";
 import { SidebarLeft } from "@/components/shad-comp/sidebar-left";
 import { SidebarRight } from "@/components/shad-comp/sidebar-right";
 import {

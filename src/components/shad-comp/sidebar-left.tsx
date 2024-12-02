@@ -1,28 +1,10 @@
 "use client";
 
 import * as React from "react";
-import {
-  AudioWaveform,
-  Blocks,
-  Calendar,
-  Command,
-  Home,
-  Inbox,
-  LucideIcon,
-  MessageCircleQuestion,
-  Search,
-  Settings2,
-  Sparkles,
-  Trash2,
-} from "lucide-react";
+import { Calendar, Home, Search, Sparkles } from "lucide-react";
 
 import { NavMain } from "@/components/shad-comp/nav-main";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarHeader,
-  SidebarRail,
-} from "@/components/ui/sidebar";
+import { Sidebar, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 
 // This is sample data.
 const navMain = [
