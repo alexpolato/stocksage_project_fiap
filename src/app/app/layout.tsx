@@ -39,7 +39,7 @@ export default function Layout({ children }: PropsWithChildren) {
             <main className="w-full bg-gray-50">{children}</main>
           </SidebarInset>
 
-          <SidebarRight />
+          {/* <SidebarRight /> */}
         </SidebarProvider>
       </div>
     </div>

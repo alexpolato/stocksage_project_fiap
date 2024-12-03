@@ -37,7 +37,7 @@ export function BarChartComponent() {
   return (
     <Card className="h-[300px]">
       <CardHeader>
-        <CardTitle>Bar Chart - Horizontal</CardTitle>
+        <CardTitle>Bar Chart - Performance</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
