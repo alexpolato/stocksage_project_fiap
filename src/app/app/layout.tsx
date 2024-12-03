@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { SidebarLeft } from "@/components/shad-comp/sidebar-left";
-import { SidebarRight } from "@/components/shad-comp/sidebar-right";
+// import { SidebarRight } from "@/components/shad-comp/sidebar-right";
 import {
   SidebarInset,
   SidebarProvider,
