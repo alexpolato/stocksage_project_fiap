@@ -14,15 +14,15 @@ const navMain = [
     icon: Search,
   },
   {
-    title: "Ask AI",
-    url: "#",
-    icon: Sparkles,
-  },
-  {
     title: "Home",
     url: "/app/dashboard",
     icon: Home,
     isActive: true,
+  },
+  {
+    title: "Previsions",
+    url: "/app/previsions",
+    icon: Sparkles,
   },
   {
     title: "Calendar",
