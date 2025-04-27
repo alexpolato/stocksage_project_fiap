@@ -35,9 +35,9 @@ export default async function Previsions() {
       })
     );
   };
-  const fetchData = await fetch("http://localhost:8080/api/home").then((res) =>
-    res.json()
-  );
+  // const fetchData = await fetch("http://localhost:8080/api/home").then((res) =>
+  //   res.json()
+  // );
 
   const handleFormSubmit = async (formData: DataProps) => {
     console.log("Dados do formulário no componente pai:", formData);
