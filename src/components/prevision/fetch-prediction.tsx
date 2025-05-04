@@ -23,6 +23,13 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
     const fetchPredictionData = async () => {
       setIsLoading(true);
       setError(null);
+      const formattedData = {
+        ...formData,
+        quantity_before_sell: Number(formData.quantity_before_sell),
+        quantity_sold: Number(formData.quantity_sold),
+        price_per_unit: Number(formData.price_per_unit),
+        price_per_unit_sold: Number(formData.price_per_unit_sold),
+      };
       try {
         const response = await fetch(
           process.env.NEXT_PUBLIC_API_PREDICTION_URL!,
@@ -31,7 +38,7 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(formData),
+            body: JSON.stringify(formattedData),
           }
         );
 

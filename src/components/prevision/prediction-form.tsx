@@ -3,28 +3,24 @@
 // Removed useRouter import
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { FormEvent, useEffect, useState } from "react"; // Removed useEffect import
-import { Select, SelectTrigger } from "../ui/select";
-import { SelectContent, SelectItem, SelectValue } from "@radix-ui/react-select";
+import { FormEvent } from "react"; // Removed useEffect import
+import Cookies from "js-cookie";
 
-interface PredictionFormProps {
-  onFormSubmit: (data: any) => void; // Callback function prop
+interface FormDataProps {
+  product_name: string;
+  quantity_before_sell: string;
+  quantity_sold: string;
+  price_per_unit: string;
+  price_per_unit_sold: string;
+  production_date: string;
+  expiration_date: string;
 }
 
-const PredictionForm = ({ onFormSubmit }: PredictionFormProps) => {
-  const [productsName, setProductsName] = useState<string[]>([
-    "Ice Cream",
-    "Milk",
-    "Yogurt",
-    "Cheese",
-    "Buttermilk",
-    "Curd",
-    "Paneer",
-    "Lassi",
-    "Ghee",
-    "Butter",
-  ]);
+interface PredictionFormProps {
+  onFormSubmitSuccess: () => void; // Callback function prop
+}
 
+const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -37,7 +33,16 @@ const PredictionForm = ({ onFormSubmit }: PredictionFormProps) => {
       }
     });
 
-    onFormSubmit(formDataObj);
+    // Store data in cookies
+    Cookies.set("predictionFormData", JSON.stringify(formDataObj), {
+      expires: 1, // Expires in 1 day
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+    });
+
+    // Call the callback function passed from the parent component
+    onFormSubmitSuccess();
+    // Removed router.refresh();
   };
 
   return (
@@ -45,15 +50,9 @@ const PredictionForm = ({ onFormSubmit }: PredictionFormProps) => {
       onSubmit={handleSubmit}
       className="space-y-4 p-4 bg-white shadow-md rounded-md"
     >
-      <div className="flex flex-col gap-4">
+      <div>
         <label htmlFor="product_name">Product Name:</label> {/* Translated */}
-        <select required name="product_name" className="w-32">
-          {productsName.map((product, index) => (
-            <option key={index} value={product}>
-              {product}
-            </option>
-          ))}
-        </select>
+        <Input required type="text" id="product_name" name="product_name" />
       </div>
       <div>
         <label htmlFor="quantity_before_sell">Quantity Purchased:</label>{" "}

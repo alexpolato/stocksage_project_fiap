@@ -2,13 +2,13 @@ import { DataTableDemo } from "@/components/data-table";
 import { Prediction } from "@/components/prevision/prediction";
 
 export interface DataProps {
-  product_name: string;
-  quantity_before_sell: string;
-  quantity_sold: string;
-  price_per_unit: string;
-  price_per_unit_sold: string;
-  production_date: string;
-  expiration_date: string;
+  product_name?: string;
+  quantity_before_sell?: string;
+  quantity_sold?: string;
+  price_per_unit?: string;
+  price_per_unit_sold?: string;
+  production_date?: string;
+  expiration_date?: string;
 }
 
 export default function Previsions() {
