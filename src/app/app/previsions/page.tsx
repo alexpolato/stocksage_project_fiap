@@ -1,4 +1,3 @@
-import { DataTableDemo } from "@/components/data-table";
 import { Prediction } from "@/components/prevision/prediction";
 
 export interface DataProps {

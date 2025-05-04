@@ -6,16 +6,6 @@ import { Button } from "../ui/button";
 import { FormEvent } from "react"; // Removed useEffect import
 import Cookies from "js-cookie";
 
-interface FormDataProps {
-  product_name: string;
-  quantity_before_sell: string;
-  quantity_sold: string;
-  price_per_unit: string;
-  price_per_unit_sold: string;
-  production_date: string;
-  expiration_date: string;
-}
-
 interface PredictionFormProps {
   onFormSubmitSuccess: () => void; // Callback function prop
 }

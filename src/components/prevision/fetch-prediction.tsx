@@ -55,7 +55,7 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
         } else {
           throw new Error("Prediction data not found in response.");
         }
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching prediction:", err);
         setError(
           err.message ||
