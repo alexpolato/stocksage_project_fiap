@@ -20,7 +20,7 @@ const navMain = [
     isActive: true,
   },
   {
-    title: "Previsions",
+    title: "Predict",
     url: "/app/previsions",
     icon: Sparkles,
   },
