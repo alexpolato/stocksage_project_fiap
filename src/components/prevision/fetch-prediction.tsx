@@ -55,13 +55,13 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
         } else {
           throw new Error("Prediction data not found in response.");
         }
-      } catch (err: unknown) {
+      } catch (err) {
         console.error("Error fetching prediction:", err);
         setError(
-          err.message ||
+          (err instanceof Error && err.message) ||
             "An unknown error occurred while fetching the prediction."
         );
-        setPredictionResult(null); // Clear previous results on error
+        setPredictionResult(null);
       } finally {
         setIsLoading(false);
       }
