@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import fetchData from "@/components/dashboard-comp/fetch-data";
-import { DairyData, DataTableDash } from "./data-table";
+import { DairyData, DataTableDash, DataTableDashProps } from "./data-table";
 
 export default function Dashboard() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<DataTableDashProps | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 

@@ -228,7 +228,7 @@ export const columns: ColumnDef<DairyData>[] = [
   },
 ];
 
-interface DataTableDashProps {
+export interface DataTableDashProps {
   data: DairyData[];
 }
 

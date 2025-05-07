@@ -1,8 +1,8 @@
-import { BarChartComponent } from "@/components/bar-chart";
-import { CircleChart } from "@/components/circle-chart";
+// import { BarChartComponent } from "@/components/bar-chart";
+// import { CircleChart } from "@/components/circle-chart";
 import DashboardComp from "@/components/dashboard-comp/dashboard";
-import { DataTableDemo } from "@/components/data-table";
-import { RadialChartComponent } from "@/components/radial-chart";
+// import { DataTableDemo } from "@/components/data-table";
+// import { RadialChartComponent } from "@/components/radial-chart";
 
 export default function Dashboard() {
   return (
