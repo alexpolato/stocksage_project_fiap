@@ -43,53 +43,53 @@ import { CalendarIcon } from "lucide-react"; // Assuming lucide-react is install
 import { DairyData } from "./data-table";
 
 // Define the structure of a single data record from your API/CSV
-interface DataRecord {
-  "Approx. Total Revenue(INR)": number;
-  Brand: string;
-  Capacity_Utilization: number;
-  "Customer Location": string;
-  Date: string; // General record date
-  Date_Sell: string; // Actual sell date, crucial for time-series
-  Day: number;
-  DayOfWeek: number;
-  Days_to_Expire: number;
-  Days_to_Sell: number;
-  "Expiration Date": string;
-  Expire: number;
-  "Farm Size": string;
-  Location: string;
-  "Minimum Stock Threshold (liters/kg)": number;
-  Month: number;
-  "Number of Cows": number;
-  "Price per Unit": number;
-  "Price per Unit (sold)": number;
-  "Product ID": number;
-  "Product Name": string;
-  "Production Date": string;
-  "Quantity (liters/kg)": number;
-  "Quantity Sold (liters/kg)": number;
-  "Quantity in Stock (liters/kg)": number;
-  Quantity_Lost: number;
-  Quantity_Sold_Before_Expire: number;
-  Quantity_Sold_Hist_Mean: number;
-  Quarter: number;
-  Real_Revenue: number;
-  "Reorder Quantity (liters/kg)": number;
-  Revenue_Before_Losses: number;
-  "Sales Channel": string;
-  Sales_Trend_7d: number;
-  Sales_Velocity: number;
-  Sales_Velocity_Hist_Mean: number;
-  Sales_Volatility_Hist: number;
-  Seasonal_Volatility: number;
-  "Shelf Life (days)": number;
-  Stock_Efficiency: number;
-  "Storage Condition": string;
-  "Total Land Area (acres)": number;
-  "Total Value": number;
-  Value_Lost: number;
-  Year: number;
-}
+// interface DataRecord {
+//   "Approx. Total Revenue(INR)": number;
+//   Brand: string;
+//   Capacity_Utilization: number;
+//   "Customer Location": string;
+//   Date: string; // General record date
+//   Date_Sell: string; // Actual sell date, crucial for time-series
+//   Day: number;
+//   DayOfWeek: number;
+//   Days_to_Expire: number;
+//   Days_to_Sell: number;
+//   "Expiration Date": string;
+//   Expire: number;
+//   "Farm Size": string;
+//   Location: string;
+//   "Minimum Stock Threshold (liters/kg)": number;
+//   Month: number;
+//   "Number of Cows": number;
+//   "Price per Unit": number;
+//   "Price per Unit (sold)": number;
+//   "Product ID": number;
+//   "Product Name": string;
+//   "Production Date": string;
+//   "Quantity (liters/kg)": number;
+//   "Quantity Sold (liters/kg)": number;
+//   "Quantity in Stock (liters/kg)": number;
+//   Quantity_Lost: number;
+//   Quantity_Sold_Before_Expire: number;
+//   Quantity_Sold_Hist_Mean: number;
+//   Quarter: number;
+//   Real_Revenue: number;
+//   "Reorder Quantity (liters/kg)": number;
+//   Revenue_Before_Losses: number;
+//   "Sales Channel": string;
+//   Sales_Trend_7d: number;
+//   Sales_Velocity: number;
+//   Sales_Velocity_Hist_Mean: number;
+//   Sales_Volatility_Hist: number;
+//   Seasonal_Volatility: number;
+//   "Shelf Life (days)": number;
+//   Stock_Efficiency: number;
+//   "Storage Condition": string;
+//   "Total Land Area (acres)": number;
+//   "Total Value": number;
+//   Value_Lost: number;
+//   Year: number;
+// }
 
 interface AnalysisProps {
   data: DairyData[]; // This data comes from your fetch-data.tsx or similar
@@ -205,28 +205,28 @@ export function Analysis({ data: initialData }: AnalysisProps) {
   }, [filteredData]);
 
   // 4. Stock Efficiency Overview (Bar Chart by Product)
-  const stockEfficiencyData = React.useMemo(() => {
-    const groupedByProduct = filteredData.reduce((acc, item) => {
-      const productName = item["Product Name"];
-      if (!acc[productName]) {
-        acc[productName] = {
-          name: productName,
-          totalStockEfficiency: 0,
-          count: 0,
-        };
-      }
-      acc[productName].totalStockEfficiency += item.Stock_Efficiency || 0;
-      acc[productName].count += 1;
-      return acc;
-    }, {} as Record<string, { name: string; totalStockEfficiency: number; count: number }>);
-    return Object.values(groupedByProduct)
-      .map((item) => ({
-        name: item.name,
-        averageStockEfficiency:
-          item.count > 0 ? (item.totalStockEfficiency / item.count) * 100 : 0, // As percentage
-      }))
-      .sort((a, b) => b.averageStockEfficiency - a.averageStockEfficiency);
-  }, [filteredData]);
+  //   const stockEfficiencyData = React.useMemo(() => {
+  //     const groupedByProduct = filteredData.reduce((acc, item) => {
+  //       const productName = item["Product Name"];
+  //       if (!acc[productName]) {
+  //         acc[productName] = {
+  //           name: productName,
+  //           totalStockEfficiency: 0,
+  //           count: 0,
+  //         };
+  //       }
+  //       acc[productName].totalStockEfficiency += item.Stock_Efficiency || 0;
+  //       acc[productName].count += 1;
+  //       return acc;
+  //     }, {} as Record<string, { name: string; totalStockEfficiency: number; count: number }>);
+  //     return Object.values(groupedByProduct)
+  //       .map((item) => ({
+  //         name: item.name,
+  //         averageStockEfficiency:
+  //           item.count > 0 ? (item.totalStockEfficiency / item.count) * 100 : 0, // As percentage
+  //       }))
+  //       .sort((a, b) => b.averageStockEfficiency - a.averageStockEfficiency);
+  //   }, [filteredData]);
 
   if (!initialData || initialData.length === 0) {
     return (
