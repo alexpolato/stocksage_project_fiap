@@ -23,10 +23,10 @@ export default function Dashboard() {
           a data de produção deve ser menor ou igual que a data de hoje, assim
           como a data de expiração maior ou igual, pois estamos considerando que
           a quantidade vendida é da data de produção até a data atual). Após
-          isso, você clica em "Executar" e o sistema irá te mostrar a previsão
-          de vendas para os próximos dias.
+          isso, você clica em Executar e o sistema irá te mostrar a previsão de
+          vendas para os próximos dias.
         </p>
-        <div className="">
+        <div>
           <div>
             <DashboardComp />
           </div>

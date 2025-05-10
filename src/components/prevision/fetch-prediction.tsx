@@ -9,7 +9,7 @@ interface FetchPredictionProps {
 
 export function FetchPrediction({ formData }: FetchPredictionProps) {
   const [predictionResult, setPredictionResult] = useState<string | null>(null);
-  const [dataPrepared, setDataPrepared] = useState<object | null>(null);
+  // const [dataPrepared, setDataPrepared] = useState<object | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,7 +51,7 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
 
         const result = await response.json();
 
-        setDataPrepared(result.data_prepared);
+        // setDataPrepared(result.data_prepared);
 
         if (result && result.prediction && result.prediction.length > 0) {
           setPredictionResult(result.prediction[0]);
@@ -86,14 +86,14 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
 
   const quantity_lost = current_stock - Number(predictionResult);
 
-  const margin =
-    Number(formData.price_per_unit_sold) - Number(formData.price_per_unit);
+  // const margin =
+  //   Number(formData.price_per_unit_sold) - Number(formData.price_per_unit);
   if (predictionResult !== null) {
     return (
       <div className="text-lg">
         <div className="text-lg">
-          Com base nas informações das vendas do produto '
-          {formData.product_name}' que você forneceu, até{" "}
+          Com base nas informações das vendas do produto
+          {formData.product_name} que você forneceu, até{" "}
           {formData.expiration_date &&
             new Date(formData.expiration_date).toLocaleDateString("pt-BR", {
               day: "2-digit",
