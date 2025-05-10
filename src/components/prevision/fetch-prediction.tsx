@@ -9,6 +9,7 @@ interface FetchPredictionProps {
 
 export function FetchPrediction({ formData }: FetchPredictionProps) {
   const [predictionResult, setPredictionResult] = useState<string | null>(null);
+  const [dataPrepared, setDataPrepared] = useState<object | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,6 +51,8 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
 
         const result = await response.json();
 
+        setDataPrepared(result.data_prepared);
+
         if (result && result.prediction && result.prediction.length > 0) {
           setPredictionResult(result.prediction[0]);
         } else {
@@ -71,17 +74,48 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
   }, [formData]); // Re-run effect if formData changes
 
   if (isLoading) {
-    return <div>Loading prediction...</div>;
+    return <div>Carregando...</div>;
   }
 
   if (error) {
-    return <div style={{ color: "red" }}>Error: {error}</div>;
+    return <div style={{ color: "red" }}>Algo deu errado: {error}</div>;
   }
 
+  const current_stock =
+    Number(formData.quantity_before_sell) - Number(formData.quantity_sold);
+
+  const quantity_lost = current_stock - Number(predictionResult);
+
+  const margin =
+    Number(formData.price_per_unit_sold) - Number(formData.price_per_unit);
   if (predictionResult !== null) {
     return (
-      <div>
-        Prediction Result: {predictionResult} (liters/kg) {/* Assuming unit */}
+      <div className="text-lg">
+        <div className="text-lg">
+          Com base nas informações das vendas do produto '
+          {formData.product_name}' que você forneceu, até{" "}
+          {formData.expiration_date &&
+            new Date(formData.expiration_date).toLocaleDateString("pt-BR", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            })}
+          , você venderá entorno de:{" "}
+          <span className="font-semibold">
+            {Number(predictionResult).toFixed(2)}{" "}
+          </span>
+          (liters/kg).{" "}
+        </div>
+        <div className="mt-2">
+          Sendo assim, com um estoque atual de {current_stock.toFixed(2)}{" "}
+          (liters/kg) você terá uma possivel perda de {quantity_lost.toFixed(2)}{" "}
+          (liters/kg), resultando em uma perda de $
+          {(quantity_lost * Number(formData.price_per_unit)).toFixed(2)}.
+        </div>
+        {/* <div className="mt-4">
+          <h3 className="font-semibold">Informações fornecidas:</h3>
+          <div>{JSON.stringify(dataPrepared)}</div>
+        </div> */}
       </div>
     );
   }

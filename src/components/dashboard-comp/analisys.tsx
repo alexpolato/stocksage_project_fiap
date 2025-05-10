@@ -41,6 +41,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils"; // Assuming you have a cn utility from shadcn/ui
 import { CalendarIcon } from "lucide-react"; // Assuming lucide-react is installed
 import { DairyData } from "./data-table";
+import { Prediction } from "../prevision/prediction";
 
 // Define the structure of a single data record from your API/CSV
 // interface DataRecord {
@@ -149,9 +150,13 @@ export function Analysis({ data: initialData }: AnalysisProps) {
       acc[date].totalQuantitySold += item["Quantity Sold (liters/kg)"] || 0;
       return acc;
     }, {} as Record<string, { date: string; totalRevenue: number; totalQuantitySold: number }>);
-    return Object.values(grouped).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
+    return Object.values(grouped)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      .map((item) => ({
+        ...item,
+        totalRevenue: parseFloat(item.totalRevenue.toFixed(2)),
+        totalQuantitySold: parseFloat(item.totalQuantitySold.toFixed(2)),
+      }));
   }, [filteredData]);
 
   // 2. Product Performance Comparison (Bar Chart)
@@ -170,9 +175,13 @@ export function Analysis({ data: initialData }: AnalysisProps) {
         item["Quantity Sold (liters/kg)"] || 0;
       return acc;
     }, {} as Record<string, { name: string; totalRevenue: number; totalQuantitySold: number }>);
-    return Object.values(groupedByProduct).sort(
-      (a, b) => b.totalRevenue - a.totalRevenue
-    ); // Sort by revenue desc
+    return Object.values(groupedByProduct)
+      .sort((a, b) => b.totalRevenue - a.totalRevenue)
+      .map((item) => ({
+        ...item,
+        totalRevenue: parseFloat(item.totalRevenue.toFixed(2)),
+        totalQuantitySold: parseFloat(item.totalQuantitySold.toFixed(2)),
+      }));
   }, [filteredData]);
 
   // 3. Losses Due to Expiration (Pie Chart for distribution by product, Bar chart for trend)
@@ -187,7 +196,11 @@ export function Analysis({ data: initialData }: AnalysisProps) {
     }, {} as Record<string, { name: string; totalQuantityLost: number }>);
     return Object.values(grouped)
       .filter((item) => item.totalQuantityLost > 0)
-      .sort((a, b) => b.totalQuantityLost - a.totalQuantityLost);
+      .sort((a, b) => b.totalQuantityLost - a.totalQuantityLost)
+      .map((item) => ({
+        ...item,
+        totalQuantityLost: parseFloat(item.totalQuantityLost.toFixed(2)),
+      }));
   }, [filteredData]);
 
   const lossesOverTimeData = React.useMemo(() => {
@@ -199,9 +212,12 @@ export function Analysis({ data: initialData }: AnalysisProps) {
       acc[date].totalQuantityLost += item.Quantity_Lost || 0;
       return acc;
     }, {} as Record<string, { date: string; totalQuantityLost: number }>);
-    return Object.values(grouped).sort(
-      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
+    return Object.values(grouped)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+      .map((item) => ({
+        ...item,
+        totalQuantityLost: parseFloat(item.totalQuantityLost.toFixed(2)),
+      }));
   }, [filteredData]);
 
   // 4. Stock Efficiency Overview (Bar Chart by Product)
@@ -244,113 +260,133 @@ export function Analysis({ data: initialData }: AnalysisProps) {
   return (
     <div className="space-y-6">
       {/* Filters Section */}
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Prediction Section */}
         <Card>
           <CardHeader>
-            <CardTitle>Filtro</CardTitle>
+            <CardTitle>Área da Predição</CardTitle>
             <CardDescription>
-              Selecione o produto e o intervalo de datas para analisar os dados.
+              Tenha um previsão de quanto irá vender até sua data de expiração,
+              evitando possiveis perdas.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col  gap-4">
-            <div className="flex-1">
-              <Select
-                value={selectedProduct}
-                onValueChange={setSelectedProduct}
-              >
-                <SelectTrigger className="w-full sm:w-[280px]">
-                  <SelectValue placeholder="Select Product" />
-                </SelectTrigger>
-                <SelectContent>
-                  {productNames.map((name) => (
-                    <SelectItem key={name} value={name}>
-                      {name === ALL_PRODUCTS ? "All Products" : name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="flex-1">
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    id="date"
-                    variant={"outline"}
-                    className={cn(
-                      "w-full sm:w-[300px] justify-start text-left font-normal",
-                      !dateRange && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {dateRange?.from ? (
-                      dateRange.to ? (
-                        <>
-                          {format(dateRange.from, "LLL dd, y")} -{" "}
-                          {format(dateRange.to, "LLL dd, y")}
-                        </>
-                      ) : (
-                        format(dateRange.from, "LLL dd, y")
-                      )
-                    ) : (
-                      <span>Selecione um intervalo de datas</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    initialFocus
-                    mode="range"
-                    defaultMonth={dateRange?.from}
-                    selected={dateRange}
-                    onSelect={setDateRange}
-                    numberOfMonths={2}
-                  />
-                </PopoverContent>
-              </Popover>
-            </div>
+            <Prediction />
           </CardContent>
         </Card>
-        {/* Losses by Product (Pie Chart) */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Perdas por Produto (Quantidade)</CardTitle>
-            <CardDescription>
-              Distribuição da quantidade perdida devido à expiração por produto.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {lossesByProductData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={lossesByProductData}
-                    dataKey="totalQuantityLost"
-                    nameKey="name"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={100}
-                    label
-                  >
-                    {lossesByProductData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]}
-                      />
+        <div className="grid grid-rows-1 gap-4">
+          <Card className="">
+            <CardHeader>
+              <CardTitle>Filtro</CardTitle>
+              <CardDescription>
+                Selecione o produto e o intervalo de datas para analisar os
+                dados.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col sm:flex-row gap-4 ">
+              <div className="flex-1">
+                <Select
+                  value={selectedProduct}
+                  onValueChange={setSelectedProduct}
+                >
+                  <SelectTrigger className="w-full sm:w-[200px]">
+                    <SelectValue placeholder="Select Product" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {productNames.map((name) => (
+                      <SelectItem key={name} value={name}>
+                        {name === ALL_PRODUCTS ? "Todos os Produtos" : name}
+                      </SelectItem>
                     ))}
-                  </Pie>
-                  <Tooltip
-                    formatter={(value: number) =>
-                      value.toLocaleString() + " kg/ltr"
-                    }
-                  />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            ) : (
-              <p>Sem dados de perdas para este período/produto.</p>
-            )}
-          </CardContent>
-        </Card>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex-1">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      id="date"
+                      variant={"outline"}
+                      className={cn(
+                        "w-full sm:w-[250px] justify-start text-left font-normal",
+                        !dateRange && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {dateRange?.from ? (
+                        dateRange.to ? (
+                          <>
+                            {format(dateRange.from, "LLL dd, y")} -{" "}
+                            {format(dateRange.to, "LLL dd, y")}
+                          </>
+                        ) : (
+                          format(dateRange.from, "LLL dd, y")
+                        )
+                      ) : (
+                        <span>Selecione um intervalo de datas</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      initialFocus
+                      mode="range"
+                      defaultMonth={dateRange?.from}
+                      selected={dateRange}
+                      onSelect={setDateRange}
+                      numberOfMonths={2}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </CardContent>
+          </Card>
+          {/* Losses by Product (Pie Chart) */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Perdas por Produto (Quantidade)</CardTitle>
+              <CardDescription>
+                Distribuição da quantidade perdida devido à expiração por
+                produto.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="h-full">
+              {lossesByProductData.length > 0 ? (
+                <ResponsiveContainer width="100%" height={350}>
+                  <PieChart>
+                    <Pie
+                      data={lossesByProductData}
+                      dataKey="totalQuantityLost"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={100}
+                      label
+                    >
+                      {lossesByProductData.map((entry, index) => (
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={
+                            PIE_CHART_COLORS[index % PIE_CHART_COLORS.length]
+                          }
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip
+                      formatter={(value: number) =>
+                        value.toLocaleString() + " kg/ltr"
+                      }
+                    />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <p>Sem dados de perdas para este período/produto.</p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

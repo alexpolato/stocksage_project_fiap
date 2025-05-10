@@ -26,7 +26,9 @@ interface PredictionFormProps {
 }
 
 const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
-  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState<string | undefined>(
+    undefined
+  );
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,8 +63,8 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
         <CardTitle>Fazer Predição</CardTitle>
         <CardDescription>
           Insira como estão indo suas vendas atualmente (de um produto
-          especifico) e tenha uma previsão de quanto irá vender até sua data de
-          expiração
+          especifico) e execute para ver a previsão de vendas para os próximos
+          dias.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -71,6 +73,7 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
             {/* Translated */}
             <Label htmlFor="product_name">Produto</Label>
             <Select
+              required
               onValueChange={(value) => setSelectedProduct(value)}
               value={selectedProduct}
             >
@@ -91,7 +94,7 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                   { name: "Manteiga", value: "Butter" },
                 ].map((product, index) => (
                   <SelectItem key={index} value={product.value}>
-                    {product.name}
+                    {product.value}
                   </SelectItem>
                 ))}
               </SelectContent>

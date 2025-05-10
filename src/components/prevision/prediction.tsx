@@ -86,7 +86,7 @@ export function Prediction() {
             refreshPredictionState();
           }}
         >
-          Make another prediction
+          Faça outra Predição
         </Button>
       </div>
     );

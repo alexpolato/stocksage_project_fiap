@@ -1,27 +1,27 @@
 import { PropsWithChildren } from "react";
-import { SidebarLeft } from "@/components/shad-comp/sidebar-left";
+// import { SidebarLeft } from "@/components/shad-comp/sidebar-left";
 // import { SidebarRight } from "@/components/shad-comp/sidebar-right";
 import {
   SidebarInset,
   SidebarProvider,
-  SidebarTrigger,
+  // SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Separator } from "@radix-ui/react-separator";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
+// import { Separator } from "@radix-ui/react-separator";
+// import {
+//   Breadcrumb,
+//   BreadcrumbItem,
+//   BreadcrumbList,
+//   BreadcrumbPage,
+// } from "@/components/ui/breadcrumb";
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
     <div className="">
       <div className="">
         <SidebarProvider>
-          <SidebarLeft />
+          {/* <SidebarLeft /> */}
           <SidebarInset>
-            <header className="sticky  top-0 flex h-14 shrink-0 items-center gap-2 bg-background">
+            {/* <header className="sticky  top-0 flex h-14 shrink-0 items-center gap-2 bg-background">
               <div className="flex flex-1 items-center gap-2 px-3">
                 <SidebarTrigger />
                 <Separator orientation="vertical" className="mr-2 h-4" />
@@ -35,7 +35,7 @@ export default function Layout({ children }: PropsWithChildren) {
                   </BreadcrumbList>
                 </Breadcrumb>
               </div>
-            </header>
+            </header> */}
             <main className="w-full bg-gray-50">{children}</main>
           </SidebarInset>
 

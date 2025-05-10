@@ -8,6 +8,12 @@ export default function Home() {
         <div className="text text-white">
           Fique a vontade para explorar como seremos no futuro
         </div>
+        <p className="text-xl font-medium">
+          Estas informações são de uma base de dados referente a vendas de
+          produtos lácteos. Estamos utilizando como exemplo, para a solução do
+          Enterprise Challenge da FIAP, visando uma solução para minimizar as
+          perdas, por expiração de produtos, da Leroy Merlim.
+        </p>
         <a href="/app/dashboard">
           <Button variant="outline" className="">
             Confira aqui
