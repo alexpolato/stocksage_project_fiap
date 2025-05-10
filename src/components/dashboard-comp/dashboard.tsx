@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import fetchData from "@/components/dashboard-comp/fetch-data";
 import { DairyData, DataTableDash, DataTableDashProps } from "./data-table";
+import { Analysis } from "./analisys";
 
 export default function Dashboard() {
   const [data, setData] = useState<DataTableDashProps | null>(null);
@@ -40,13 +41,18 @@ export default function Dashboard() {
   }
   return (
     <div>
-      <h1 className="mt-10 font-medium text-xl">Dashboard Data</h1>
       <div>
-        <DataTableDash data={data.data as DairyData[]} />
+        <div className="grid mt-5 w-full">
+          {" "}
+          <Analysis data={data.data as DairyData[]} />
+        </div>
       </div>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-      {/* Pass the fetched
-      {/* Display the fetched data */}
+      <div>
+        <h1 className="mt-10 font-medium text-xl">Dashboard Data</h1>
+        <div>
+          <DataTableDash data={data.data as DairyData[]} />
+        </div>
+      </div>
     </div>
   );
 }

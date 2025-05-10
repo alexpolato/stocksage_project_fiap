@@ -3,18 +3,39 @@
 // Removed useRouter import
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { FormEvent } from "react"; // Removed useEffect import
+import { FormEvent, useState } from "react"; // Removed useEffect import
 import Cookies from "js-cookie";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from "../ui/select";
+import { Label } from "../ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 interface PredictionFormProps {
   onFormSubmitSuccess: () => void; // Callback function prop
 }
 
 const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
+  const [selectedProduct, setSelectedProduct] = useState("");
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
 
+    if (selectedProduct) {
+      formData.append("product_name", selectedProduct);
+    }
     // Convert FormData to object
     const formDataObj: Record<string, string> = {};
     formData.forEach((value, key) => {
@@ -36,73 +57,123 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="space-y-4 p-4 bg-white shadow-md rounded-md"
-    >
-      <div>
-        <label htmlFor="product_name">Product Name:</label> {/* Translated */}
-        <Input required type="text" id="product_name" name="product_name" />
-      </div>
-      <div>
-        <label htmlFor="quantity_before_sell">Quantity Purchased:</label>{" "}
-        {/* Translated */}
-        <Input
-          required
-          type="number"
-          id="quantity_before_sell"
-          name="quantity_before_sell"
-        />
-      </div>
-      <div>
-        <label htmlFor="quantity_sold">
-          Quantity Sold to Date: {/* Translated */}
-        </label>
-        <Input required type="number" id="quantity_sold" name="quantity_sold" />
-      </div>
-      <div>
-        <label htmlFor="price_per_unit">Price Paid:</label> {/* Translated */}
-        <Input
-          required
-          type="number"
-          step="0.01"
-          id="price_per_unit"
-          name="price_per_unit"
-        />
-      </div>
-      <div>
-        <label htmlFor="price_per_unit_sold">Price Sold:</label>{" "}
-        {/* Translated */}
-        <Input
-          required
-          type="number"
-          step="0.01"
-          id="price_per_unit_sold"
-          name="price_per_unit_sold"
-        />
-      </div>
-      <div>
-        <label htmlFor="production_date">Production Date:</label>{" "}
-        {/* Translated */}
-        <Input
-          required
-          type="date"
-          id="production_date"
-          name="production_date"
-        />
-      </div>
-      <div>
-        <label htmlFor="expiration_date">Expiration Date:</label>{" "}
-        {/* Translated */}
-        <Input
-          required
-          type="date"
-          id="expiration_date"
-          name="expiration_date"
-        />
-      </div>
-      <Button type="submit">Submit</Button>
-    </form>
+    <Card className="">
+      <CardHeader>
+        <CardTitle>Fazer Predição</CardTitle>
+        <CardDescription>
+          Insira como estão indo suas vendas atualmente (de um produto
+          especifico) e tenha uma previsão de quanto irá vender até sua data de
+          expiração
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4 p-2 ">
+          <div>
+            {/* Translated */}
+            <Label htmlFor="product_name">Produto</Label>
+            <Select
+              onValueChange={(value) => setSelectedProduct(value)}
+              value={selectedProduct}
+            >
+              <SelectTrigger id="product_name" name="product_name">
+                <SelectValue placeholder="Select" />
+              </SelectTrigger>
+              <SelectContent className="max-h-[200px]" position="popper">
+                {[
+                  { name: "Sorvete", value: "Ice Cream" },
+                  { name: "Leite", value: "Milk" },
+                  { name: "Iogurt", value: "Yogurt" },
+                  { name: "Queijo", value: "Cheese" },
+                  { name: "Leitelho", value: "Buttermilk" },
+                  { name: "Coalhada", value: "Curd" },
+                  { name: "Queijo (Paneer)", value: "Paneer" },
+                  { name: "Lassi", value: "Lassi" },
+                  { name: "Manteiga Clarificada (Ghee)", value: "Ghee" },
+                  { name: "Manteiga", value: "Butter" },
+                ].map((product, index) => (
+                  <SelectItem key={index} value={product.value}>
+                    {product.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>{" "}
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="production_date">Data de Produção</Label>{" "}
+              {/* Translated */}
+              <Input
+                required
+                type="date"
+                id="production_date"
+                name="production_date"
+              />
+            </div>
+            <div>
+              <Label htmlFor="expiration_date">Data de Expiração</Label>{" "}
+              {/* Translated */}
+              <Input
+                required
+                type="date"
+                id="expiration_date"
+                name="expiration_date"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Label htmlFor="quantity_before_sell">Quantidade Comprada</Label>{" "}
+              {/* Translated */}
+              <Input
+                required
+                type="number"
+                id="quantity_before_sell"
+                name="quantity_before_sell"
+              />
+            </div>
+            <div>
+              <Label htmlFor="quantity_sold">
+                Quantidade Vendida até hoje {/* Translated */}
+              </Label>
+              <Input
+                required
+                type="number"
+                id="quantity_sold"
+                name="quantity_sold"
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="">
+              <Label htmlFor="price_per_unit">Preço de Compra</Label>{" "}
+              {/* Translated */}
+              <Input
+                required
+                type="number"
+                step="0.01"
+                id="price_per_unit"
+                name="price_per_unit"
+              />
+            </div>
+
+            <div>
+              <Label htmlFor="price_per_unit_sold">Preço de Venda</Label>{" "}
+              {/* Translated */}
+              <Input
+                required
+                type="number"
+                step="0.01"
+                id="price_per_unit_sold"
+                name="price_per_unit_sold"
+              />
+            </div>
+          </div>
+
+          <Button type="submit">Executar</Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 
