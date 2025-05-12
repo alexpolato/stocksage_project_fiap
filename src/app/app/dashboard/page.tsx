@@ -1,19 +1,23 @@
 // import { BarChartComponent } from "@/components/bar-chart";
 // import { CircleChart } from "@/components/circle-chart";
 import DashboardComp from "@/components/dashboard-comp/dashboard";
+import { HeaderComp } from "@/components/header";
 // import { DataTableDemo } from "@/components/data-table";
 // import { RadialChartComponent } from "@/components/radial-chart";
 
 export default function Dashboard() {
   return (
     <div>
+      <div>
+        <HeaderComp />
+      </div>
       <div className="p-10">
         <h1 className="text-3xl font-semibold">Bem vindo!</h1>
         <p className="text-xl font-medium">
           Segue o painel de controle com as informações que você precisa para
           tomar decisões mais assertivas.
         </p>
-        <p className="text-lg font-medium text-gray-700">
+        {/* <p className="text-lg font-medium text-gray-700">
           Os filtros são para os gráficos do dataset. A área de predição é o
           resultado do machine learning criado e desenvolvido pela equipe da
           Stocksage, para minimizar as perdas e ter maior controle de estoque. O
@@ -25,7 +29,7 @@ export default function Dashboard() {
           a quantidade vendida é da data de produção até a data atual). Após
           isso, você clica em Executar e o sistema irá te mostrar a previsão de
           vendas para os próximos dias.
-        </p>
+        </p> */}
         <div>
           <div>
             <DashboardComp />

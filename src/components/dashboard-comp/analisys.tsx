@@ -293,7 +293,7 @@ export function Analysis({ data: initialData }: AnalysisProps) {
                   <SelectTrigger className="w-full sm:w-[200px]">
                     <SelectValue placeholder="Select Product" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-[200px]">
                     {productNames.map((name) => (
                       <SelectItem key={name} value={name}>
                         {name === ALL_PRODUCTS ? "Todos os Produtos" : name}
