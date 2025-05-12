@@ -38,21 +38,21 @@ import { LossesOverTime } from "@/components/losses-over-time-call";
 import { SalesOverTime } from "@/components/sales-over-time-call";
 
 // Placeholder for images - in a real scenario, these would be actual image paths or components
-const PlaceholderImage = ({
-  alt,
-  className,
-}: {
-  alt: string;
-  className?: string;
-}) => (
-  <div
-    className={`bg-gray-300 flex items-center justify-center text-gray-500 ${
-      className || "h-64 w-full"
-    }`}
-  >
-    {alt}
-  </div>
-);
+// const PlaceholderImage = ({
+//   alt,
+//   className,
+// }: {
+//   alt: string;
+//   className?: string;
+// }) => (
+//   <div
+//     className={`bg-gray-300 flex items-center justify-center text-gray-500 ${
+//       className || "h-64 w-full"
+//     }`}
+//   >
+//     {alt}
+//   </div>
+// );
 
 const teamMembers = [
   {
