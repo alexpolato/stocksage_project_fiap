@@ -92,15 +92,15 @@ export function FetchPrediction({ formData }: FetchPredictionProps) {
     return (
       <div className="text-lg">
         <div className="text-lg">
-          Com base nas informações das vendas do produto
-          {formData.product_name} que você forneceu, até{" "}
+          Com base nas informações das vendas do produto {formData.product_name}{" "}
+          que você forneceu, até{" "}
           {formData.expiration_date &&
             new Date(formData.expiration_date).toLocaleDateString("pt-BR", {
               day: "2-digit",
               month: "long",
               year: "numeric",
             })}
-          , você venderá entorno de:{" "}
+          , você venderá em torno de:{" "}
           <span className="font-semibold">
             {Number(predictionResult).toFixed(2)}{" "}
           </span>

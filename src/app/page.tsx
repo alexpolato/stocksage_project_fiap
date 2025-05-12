@@ -24,7 +24,7 @@ import { HeaderComp } from "@/components/header";
 import Image from "next/image";
 import Dash01 from "../../assets/dash01.png"; // Adjust the import path as necessary
 import Dash02 from "../../assets/dash02.png"; // Adjust the import path as necessary
-import DashboardComp from "@/components/dashboard-comp/dashboard";
+
 import {
   Carousel,
   CarouselContent,
@@ -32,6 +32,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Link from "next/link";
 
 // Placeholder for images - in a real scenario, these would be actual image paths or components
 const PlaceholderImage = ({
@@ -71,7 +72,7 @@ export default function LandingPage() {
       {/* Main Content */}
       <main className="flex-1  ">
         {/* Hero Section */}
-        <section className="py-8 md:py-14 lg:py-22 bg-gradient from-primary/10 via-background to-background">
+        <section className="py-8 mx-5 md:py-14 lg:py-22 bg-gradient from-primary/10 via-background to-background">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
               <div className="flex flex-col justify-center space-y-4">
@@ -90,10 +91,10 @@ export default function LandingPage() {
                 </div>
                 <div className="flex flex-col gap-2 min-[400px]:flex-row">
                   <Button className="bg-green-600" size="lg" asChild>
-                    <a href="/app/dashboard">
+                    <Link href="/app/dashboard">
                       Descubra como Reduzir Perdas{" "}
                       <ChevronRight className="ml-2 h-5 w-5" />
-                    </a>
+                    </Link>
                   </Button>
                 </div>
               </div>
@@ -483,7 +484,7 @@ export default function LandingPage() {
                 className="w-full mt-3 bg-green-600"
                 size="lg"
               >
-                <a href="/app/dashboard">Analisar Demonstração</a>
+                <Link href="/app/dashboard">Analisar Demonstração</Link>
               </Button>
             </div>
           </div>
