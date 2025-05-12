@@ -6,6 +6,7 @@ import { DataProps } from "@/app/app/previsions/page"; // Assuming this path is 
 import PredictionForm from "./prediction-form";
 import { FetchPrediction } from "./fetch-prediction";
 import { Button } from "../ui/button";
+import { FetchPredictionEnhanced } from "./fetch-prediction-enhanced";
 
 export function Prediction() {
   const predictionKey = "predictionFormData";
@@ -78,7 +79,7 @@ export function Prediction() {
     return (
       <div>
         {/* Pass formData to FetchPrediction */}
-        <FetchPrediction formData={formData} />
+        <FetchPredictionEnhanced formData={formData} />
         <Button
           className="mt-2"
           onClick={() => {

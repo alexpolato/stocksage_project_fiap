@@ -261,7 +261,7 @@ export function Analysis({ data: initialData }: AnalysisProps) {
     <div className="space-y-6">
       {/* Filters Section */}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {/* Prediction Section */}
         <Card>
           <CardHeader>
@@ -275,73 +275,115 @@ export function Analysis({ data: initialData }: AnalysisProps) {
             <Prediction />
           </CardContent>
         </Card>
-        <div className="grid grid-rows-1 gap-4">
-          <Card className="">
-            <CardHeader>
-              <CardTitle>Filtro</CardTitle>
-              <CardDescription>
-                Selecione o produto e o intervalo de datas para analisar os
-                dados.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex flex-col sm:flex-row gap-4 ">
-              <div className="flex-1">
-                <Select
-                  value={selectedProduct}
-                  onValueChange={setSelectedProduct}
-                >
-                  <SelectTrigger className="w-full sm:w-[200px]">
-                    <SelectValue placeholder="Select Product" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-[200px]">
-                    {productNames.map((name) => (
-                      <SelectItem key={name} value={name}>
-                        {name === ALL_PRODUCTS ? "Todos os Produtos" : name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex-1">
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      id="date"
-                      variant={"outline"}
-                      className={cn(
-                        "w-full sm:w-[250px] justify-start text-left font-normal",
-                        !dateRange && "text-muted-foreground"
-                      )}
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {dateRange?.from ? (
-                        dateRange.to ? (
-                          <>
-                            {format(dateRange.from, "LLL dd, y")} -{" "}
-                            {format(dateRange.to, "LLL dd, y")}
-                          </>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-rows-1 gap-4">
+            <Card className="">
+              <CardHeader>
+                <CardTitle>Filtro</CardTitle>
+                <CardDescription>
+                  Selecione o produto e o intervalo de datas para analisar os
+                  dados.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-col sm:flex-row gap-4 ">
+                <div className="flex-1">
+                  <Select
+                    value={selectedProduct}
+                    onValueChange={setSelectedProduct}
+                  >
+                    <SelectTrigger className="w-full sm:w-[200px]">
+                      <SelectValue placeholder="Select Product" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-[200px]">
+                      {productNames.map((name) => (
+                        <SelectItem key={name} value={name}>
+                          {name === ALL_PRODUCTS ? "Todos os Produtos" : name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex-1">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        id="date"
+                        variant={"outline"}
+                        className={cn(
+                          "w-full sm:w-[250px] justify-start text-left font-normal",
+                          !dateRange && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateRange?.from ? (
+                          dateRange.to ? (
+                            <>
+                              {format(dateRange.from, "LLL dd, y")} -{" "}
+                              {format(dateRange.to, "LLL dd, y")}
+                            </>
+                          ) : (
+                            format(dateRange.from, "LLL dd, y")
+                          )
                         ) : (
-                          format(dateRange.from, "LLL dd, y")
-                        )
-                      ) : (
-                        <span>Selecione um intervalo de datas</span>
-                      )}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      initialFocus
-                      mode="range"
-                      defaultMonth={dateRange?.from}
-                      selected={dateRange}
-                      onSelect={setDateRange}
-                      numberOfMonths={2}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-            </CardContent>
-          </Card>
+                          <span>Selecione um intervalo de datas</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        initialFocus
+                        mode="range"
+                        defaultMonth={dateRange?.from}
+                        selected={dateRange}
+                        onSelect={setDateRange}
+                        numberOfMonths={2}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </CardContent>
+            </Card>
+            {/* Product Performance Comparison Chart */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Performance do Produto</CardTitle>
+                <CardDescription>
+                  Comparação de produtos por receita total e quantidade vendida.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {productPerformanceData.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={productPerformanceData} layout="vertical">
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" />
+                      <YAxis dataKey="name" type="category" width={120} />
+                      <Tooltip
+                        formatter={(value: number) => value.toLocaleString()}
+                      />
+                      <Legend />
+                      <Bar
+                        dataKey="totalRevenue"
+                        fill="#8884d8"
+                        name="Receita Total (INR)"
+                      />
+                      <Bar
+                        dataKey="totalQuantitySold"
+                        fill="#82ca9d"
+                        name="Quantidade Total Vendida"
+                      />
+                    </BarChart>
+                  </ResponsiveContainer>
+                ) : (
+                  <p>
+                    Sem dados de desempenho do produto para este
+                    período/produto.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Losses by Product (Pie Chart) */}
           <Card>
             <CardHeader>
@@ -389,7 +431,7 @@ export function Analysis({ data: initialData }: AnalysisProps) {
         </div>
       </div>
       {/* Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6">
         {/* Sales Over Time Chart */}
         <Card>
           <CardHeader>
@@ -434,45 +476,6 @@ export function Analysis({ data: initialData }: AnalysisProps) {
               </ResponsiveContainer>
             ) : (
               <p>Sem dados de vendas para este período/produto.</p>
-            )}
-          </CardContent>
-        </Card>
-
-        {/* Product Performance Comparison Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Performance do Produto</CardTitle>
-            <CardDescription>
-              Comparação de produtos por receita total e quantidade vendida.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {productPerformanceData.length > 0 ? (
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={productPerformanceData} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis type="number" />
-                  <YAxis dataKey="name" type="category" width={120} />
-                  <Tooltip
-                    formatter={(value: number) => value.toLocaleString()}
-                  />
-                  <Legend />
-                  <Bar
-                    dataKey="totalRevenue"
-                    fill="#8884d8"
-                    name="Receita Total (INR)"
-                  />
-                  <Bar
-                    dataKey="totalQuantitySold"
-                    fill="#82ca9d"
-                    name="Quantidade Total Vendida"
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            ) : (
-              <p>
-                Sem dados de desempenho do produto para este período/produto.
-              </p>
             )}
           </CardContent>
         </Card>

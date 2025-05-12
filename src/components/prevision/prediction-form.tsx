@@ -44,6 +44,28 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
         formDataObj[key] = value;
       }
     });
+    if (
+      Number(formDataObj.quantity_before_sell) <
+      Number(formDataObj.quantity_sold)
+    ) {
+      alert(
+        "ERRO: \nA quantidade vendida não pode ser maior que a quantidade comprada!"
+      );
+      return;
+    } else if (formDataObj.production_date > formDataObj.expiration_date) {
+      alert(
+        "ERRO: \nA data de produção deve ser menor que a data de expiração!"
+      );
+      return;
+    } else if (
+      new Date() <= new Date(formDataObj.production_date) ||
+      new Date() >= new Date(formDataObj.expiration_date)
+    ) {
+      alert(
+        "ERRO: \nComo estamos fazendo um calculo de previsão, a data atual deve estar entre as datas de produção e de expiração!"
+      );
+      return;
+    }
 
     // Store data in cookies
     Cookies.set("predictionFormData", JSON.stringify(formDataObj), {
