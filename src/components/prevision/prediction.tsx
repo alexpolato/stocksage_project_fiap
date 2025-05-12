@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { DataProps } from "@/app/app/previsions/page"; // Assuming this path is correct relative to the new location or alias
 import PredictionForm from "./prediction-form";
-import { FetchPrediction } from "./fetch-prediction";
+// import { FetchPrediction } from "./fetch-prediction";
 import { Button } from "../ui/button";
 import { FetchPredictionEnhanced } from "./fetch-prediction-enhanced";
 

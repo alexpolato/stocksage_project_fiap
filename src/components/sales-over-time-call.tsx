@@ -34,12 +34,12 @@ export function SalesOverTime() {
 
   const ALL_PRODUCTS = "all_products";
   const selectedProduct = ALL_PRODUCTS;
-  const dateRange: DateRange = {
-    from: new Date("2021-11-13"),
-    to: new Date("2022-12-27"),
-  };
 
   const filteredData = React.useMemo(() => {
+    const dateRange: DateRange = {
+      from: new Date("2021-11-13"),
+      to: new Date("2022-12-27"),
+    };
     if (!data) return [];
     return data.filter((item: DairyData) => {
       const itemDateSell = parseISO(item.Date_Sell); // Ensure Date_Sell is in ISO format or parse accordingly
@@ -53,7 +53,7 @@ export function SalesOverTime() {
           : true; // If no date range, include all
       return isProductMatch && isDateInRange;
     });
-  }, [data, selectedProduct, dateRange]);
+  }, [data, selectedProduct]);
 
   const salesOverTimeData = React.useMemo(() => {
     const grouped = filteredData.reduce((acc, item) => {

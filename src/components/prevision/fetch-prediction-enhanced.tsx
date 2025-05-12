@@ -24,7 +24,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
   Cell,
 } from "recharts";
@@ -244,10 +243,10 @@ export function FetchPredictionEnhanced({ formData }: FetchPredictionProps) {
     return <div style={{ color: "red" }}>Algo deu errado: {error}</div>;
   }
 
-  const current_stock =
-    Number(formData.quantity_before_sell) - Number(formData.quantity_sold);
+  //   const current_stock =
+  //     Number(formData.quantity_before_sell) - Number(formData.quantity_sold);
   const predicted_sell_amount = Number(predictionResult);
-  const quantity_lost = current_stock - predicted_sell_amount;
+  //   const quantity_lost = current_stock - predicted_sell_amount;
 
   return (
     <div className="space-y-6">
