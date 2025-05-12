@@ -24,6 +24,7 @@ import { HeaderComp } from "@/components/header";
 import Image from "next/image";
 import Dash01 from "../../assets/dash01.png"; // Adjust the import path as necessary
 import Dash02 from "../../assets/dash02.png"; // Adjust the import path as necessary
+import DesenhoArquitetura from "../../assets/arquitetura.png"; // Adjust the import path as necessary
 
 import {
   Carousel,
@@ -33,6 +34,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Link from "next/link";
+import { LossesOverTime } from "@/components/losses-over-time-call";
+import { SalesOverTime } from "@/components/sales-over-time-call";
 
 // Placeholder for images - in a real scenario, these would be actual image paths or components
 const PlaceholderImage = ({
@@ -121,7 +124,6 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
         {/* O Problema Section */}
         <section id="problema" className="py-8 md:py-14 lg:py-22 bg-muted/40">
           <div className="container px-4 md:px-6">
@@ -137,18 +139,19 @@ export default function LandingPage() {
                 <p className=" max-w-[900px]  text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   A Leroy Merlin enfrenta um desafio crítico: perdas financeiras
                   anuais de aproximadamente R$33 milhões devido ao vencimento de
-                  produtos perecíveis. Modelos de previsão atuais não consideram
-                  a validade, e a falta de registro sistemático das datas de
-                  vencimento agrava o problema, resultando em alto índice de
-                  desperdício e custos operacionais elevados.
+                  produtos perecíveis. Os modelos de previsão atuais possui uma
+                  falta de tempo para tomada de decisão, com relação ao
+                  vencimento de produtos, e a falta de registro sistemático das
+                  datas de vencimento agrava o problema, resultando em alto
+                  índice de desperdício e custos operacionais elevados.
                 </p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-              <PlaceholderImage
-                alt="Produtos vencidos ou gráfico de perdas"
-                className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
-              />
+              <div className="mx-auto aspect-video  rounded-xl object-cover object-center sm:w-full lg:order-last">
+                <LossesOverTime />
+              </div>
+
               <div className="flex flex-col justify-center space-y-4">
                 <ul className="grid gap-6">
                   <li>
@@ -189,7 +192,6 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
         {/* Solução Section */}
         <section id="solucao" className="py-8 md:py-14 lg:py-22">
           <div className="container px-4 md:px-6">
@@ -198,13 +200,22 @@ export default function LandingPage() {
                 Nossa Solução
               </div>
               <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                StockSage: A Inteligência que Previne o Vencimento
+                STOCKSAGE: A Inteligência que Previne o Vencimento
               </h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                 Apresentamos o StockSage, um sistema de gestão preventiva de
                 vencimento. Nossa plataforma integra-se às tecnologias
                 existentes, utilizando análise de dados avançada e dashboards
-                interativos para fornecer insights em tempo real.
+                interativos para fornecer insights. Para ilustrar a nossa
+                solução, utilizamos uma{" "}
+                <Link
+                  className="font-semibold text-primary underline"
+                  href="https://www.kaggle.com/datasets/suraj520/dairy-goods-sales-dataset"
+                >
+                  base de dados sobre vendas de produtos laticínios
+                </Link>
+                , no qual possui uma data de expiração curta, que deixa mais
+                claro essa problemática de perdas.
               </p>
             </div>
             <div className="mx-auto grid max-w-5xl items-start gap-8 sm:grid-cols-2 md:gap-12 lg:grid-cols-3">
@@ -279,15 +290,11 @@ export default function LandingPage() {
                 </CardContent>
               </Card>
             </div>
-            <div className="mt-12 text-center">
-              <PlaceholderImage
-                alt="Dashboard StockSage em ação"
-                className="mx-auto aspect-video max-w-3xl overflow-hidden rounded-xl object-cover object-center"
-              />
+            <div className="m-12 text-center">
+              <SalesOverTime />
             </div>
           </div>
         </section>
-
         {/* Benefícios Section */}
         <section id="beneficios" className="py-8 md:py-14 lg:py-22 bg-muted/40">
           <div className="container px-4 md:px-6">
@@ -373,7 +380,6 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
         {/* Arquitetura Section (Simplified) */}
         <section id="arquitetura" className="py-8 md:py-14 lg:py-22">
           <div className="container px-4 md:px-6">
@@ -391,41 +397,47 @@ export default function LandingPage() {
                   Kafka e Machine Learning para garantir integração,
                   escalabilidade e performance superior.
                 </p>
+                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-md/relaxed">
+                  (Obs: nosso projeto atual está bem mais simplificado, o
+                  desenho é de como deveria ser em escala de produção real)
+                </p>
               </div>
             </div>
             <div className="mx-auto max-w-5xl py-12">
-              <PlaceholderImage
+              <Image
+                src={DesenhoArquitetura}
                 alt="Diagrama simplificado da arquitetura"
                 className="rounded-lg"
               />
             </div>
           </div>
         </section>
-
         {/* Resultados e Projeções Section */}
-        <section
+        {/* <section
           id="resultados"
           className="py-8 md:py-14 lg:py-22 bg-green-600 text-primary-foreground"
         >
-          <div className="container px-4 md:px-6 text-center">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
-              Resultados que Falam por Si
-            </h2>
-            <p className="mx-auto max-w-[700px] md:text-xl mb-8">
-              Em simulações, identificamos que até 60% dos produtos poderiam ser
-              vendidos fora da validade sem uma gestão adequada. StockSage atua
-              diretamente para reverter este quadro. Com StockSage, projetamos
-              uma redução significativa dos R$33 milhões em perdas anuais.
-            </p>
-            {/* Link para o dashboard, se existir e for público */}
-            {/* <Button variant="secondary" size="lg" asChild>
+        <div className="container px-4 md:px-6 text-center">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
+            Resultados que Falam por Si
+          </h2>
+          <p className="mx-auto max-w-[700px] md:text-xl mb-8">
+            Em simulações, identificamos que até 60% dos produtos poderiam ser
+            vendidos fora da validade sem uma gestão adequada. StockSage atua
+            diretamente para reverter este quadro. Com StockSage, projetamos uma
+            redução significativa dos R$33 milhões em perdas anuais.
+          </p>
+          Link para o dashboard, se existir e for público
+          <Button variant="secondary" size="lg" asChild>
               <a href="/dashboard-link">Explore nosso dashboard <ChevronRight className="ml-2 h-5 w-5" /></a>
-            </Button> */}
-          </div>
-        </section>
-
+            </Button>
+        </div>
+        </section> */}
         {/* Equipe Section */}
-        <section id="equipe" className="py-8 md:py-14 lg:py-22">
+        <section
+          id="equipe"
+          className="py-8 md:py-14 lg:py-22 bg-green-600 text-primary"
+        >
           <div className="container px-4 md:px-6">
             <div className="space-y-3 text-center mb-12">
               <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">
@@ -456,7 +468,6 @@ export default function LandingPage() {
             </div>
           </div>
         </section>
-
         {/* Contato Section */}
         <section id="contato" className="py-8 md:py-14 lg:py-22 bg-muted/40">
           <div className="container px-4 md:px-6">
