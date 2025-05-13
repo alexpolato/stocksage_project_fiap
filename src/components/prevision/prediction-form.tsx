@@ -120,6 +120,7 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                   </SelectItem>
                 ))}
               </SelectContent>
+              <Label className="text-gray-600 ml-3"> Escolha um produto</Label>
             </Select>{" "}
           </div>
           <div className="grid grid-cols-2 gap-4">
@@ -132,6 +133,9 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                 id="production_date"
                 name="production_date"
               />
+              <Label className="text-gray-600 ml-3">
+                A data de produção é referente ao lote do produto
+              </Label>
             </div>
             <div>
               <Label htmlFor="expiration_date">Data de Expiração</Label>{" "}
@@ -142,12 +146,17 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                 id="expiration_date"
                 name="expiration_date"
               />
+              <Label className="text-gray-600 ml-3">
+                A data de expiração é referente a validade
+              </Label>
             </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <Label htmlFor="quantity_before_sell">Quantidade Comprada</Label>{" "}
+              <Label htmlFor="quantity_before_sell">
+                Quantidade Comprada/Produzida (kg/lt)
+              </Label>{" "}
               {/* Translated */}
               <Input
                 required
@@ -155,10 +164,14 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                 id="quantity_before_sell"
                 name="quantity_before_sell"
               />
+              <Label className="text-gray-600 ml-3">
+                Quantidade é quantos produtos foram comprados ou produzidos
+                naquele lote
+              </Label>
             </div>
             <div>
               <Label htmlFor="quantity_sold">
-                Quantidade Vendida até hoje {/* Translated */}
+                Quantidade Vendida até hoje (kg/lt){/* Translated */}
               </Label>
               <Input
                 required
@@ -166,11 +179,15 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                 id="quantity_sold"
                 name="quantity_sold"
               />
+              <Label className="text-gray-600 ml-3">
+                Quantidade Vendida, ou seja, quantos produtos foram vendidos até
+                o dia de hoje
+              </Label>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="">
-              <Label htmlFor="price_per_unit">Preço de Compra</Label>{" "}
+              <Label htmlFor="price_per_unit">Preço de Compra (kg/lt)</Label>{" "}
               {/* Translated */}
               <Input
                 required
@@ -179,10 +196,15 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                 id="price_per_unit"
                 name="price_per_unit"
               />
+              <Label className="text-gray-600 ml-3">
+                Preço do kg/lt comprado ou produzido
+              </Label>
             </div>
 
             <div>
-              <Label htmlFor="price_per_unit_sold">Preço de Venda</Label>{" "}
+              <Label htmlFor="price_per_unit_sold">
+                Preço de Venda (kg/lt)
+              </Label>{" "}
               {/* Translated */}
               <Input
                 required
@@ -191,6 +213,9 @@ const PredictionForm = ({ onFormSubmitSuccess }: PredictionFormProps) => {
                 id="price_per_unit_sold"
                 name="price_per_unit_sold"
               />
+              <Label className="text-gray-600 ml-3">
+                Preço do kg/lt vendido
+              </Label>
             </div>
           </div>
 
